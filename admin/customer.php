@@ -1,0 +1,100 @@
+<?php include 'inc/header.php';?>
+<?php include 'inc/sidebar.php';?>
+<?php
+
+$filepath = realpath(dirname(__FILE__));
+include_once ($filepath.'/../classes/customer.php');
+include_once ($filepath.'/../helpers/format.php');
+
+ ?>
+<?php
+   
+    if(!isset($_GET['customerid']) || $_GET['customerid']==NULL){
+       echo "<script>window.location ='inbox.php'</script>";
+    }else{
+         $id = $_GET['customerid']; 
+    }
+     $cs = new customer();
+  
+
+?>
+<?php  ?>
+        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>DANH MỤC KHÁCH HÀNG </h2>
+
+               <div class="block copyblock"> 
+                
+                <?php
+                    $get_customer = $cs->show_customers($id);
+                    if($get_customer){
+                        while($result = $get_customer->fetch_assoc()){
+                       
+                ?>
+                 <form action="" method="post">
+                    <table class="form">					
+                        <tr>
+                            <td>TÊN KHÁCH HÀNG</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['name'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SĐT</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['phone'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>HUYỆN/XÃ</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['city'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TỈNH/THÀNH PHỐ</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['country'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>ĐỊA CHỈ</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['address'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>MẬT KHẨU</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['zipcode'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>EMAIL (TÀI KHOẢN)</td>
+                            <td>:</td>
+                            <td>
+                                <input type="text" readonly="readonly" value="<?php echo $result['email'] ?>" name="catName" class="medium" />
+                            </td>
+                        </tr>
+                      
+						
+                    </table>
+                </form>
+
+                <?php
+                }
+            }
+                
+
+                ?>
+
+                </div>
+            </div>
+        </div>
+<?php include 'inc/footer.php';?>
